@@ -1,14 +1,14 @@
-import Signup from '@src/types/signup'
+import Signup, { SignupStatus } from '@src/types/signup'
 
-const insert = async (signup: Signup): Promise<void> => {
+const insert = async (_signup: Signup): Promise<void> => {
   throw new Error('Not implemented')
 }
 
-const updateStatus = async (signup: Signup, newStatus: string): Promise<Signup> => {
+const updateStatus = async (_signup: Signup, _newStatus: SignupStatus): Promise<Signup> => {
   throw new Error('Not implemented')
 }
 
-const getByToken = async (token: string): Promise<Signup> => {
+const getByToken = async (_token: string): Promise<Signup> => {
   throw new Error('Not implemented')
 }
 
