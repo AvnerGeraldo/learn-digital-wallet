@@ -12,7 +12,7 @@ describe('Create timeline', () => {
   })
 
   afterEach(() => restore())
-  
+
   it('should persist a timeline in the database', async () => {
     const userParams: UserParams = {
       userId: 'Some user id',
@@ -22,5 +22,17 @@ describe('Create timeline', () => {
     await createTimeline(userParams)
 
     expect(insertTimeline).to.have.been.calledOnce
+  });
+
+  it('should return a timeline with all events inside', async () => {
+    const userParams: UserParams = {
+      userId: 'Some user id',
+      fullname: 'Some fullname'
+    }
+
+    const timeline = await createTimeline(userParams)
+
+    expect(timeline.events).to.be.an('array').that.has.length(1)
+    expect(timeline.events[0].description).to.be.equal(`Welcome ${userParams.fullname}!`)
   });
 });
