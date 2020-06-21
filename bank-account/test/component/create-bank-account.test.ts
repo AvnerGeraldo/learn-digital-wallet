@@ -6,10 +6,12 @@ import userBankAccountRepo from '@src/ports/repo/user-bank-account.ts'
 import createBankAccount from '@src/controllers/create-bank-account'
 import User, { UserParams, UserBankAccount } from '@src/types/user';
 import BankAccount from '@src/types/bank-account';
+import userBankAccountNotifier from '@src/ports/notifiers/user-bank-account'
 
 let createAccountBankPartner: SinonStub,
 insertUser: SinonStub,
-insertUserBankAccount: SinonStub
+insertUserBankAccount: SinonStub,
+userBankAccountNotification: SinonStub
 
 const makeGivenBankAccount = (): BankAccount => ({
   bankCode: '123',
@@ -22,6 +24,7 @@ describe('Create bank account', () => {
     createAccountBankPartner = stub(bankPartner, 'createAccount').resolves(makeGivenBankAccount())
     insertUser = stub(userRepo, 'insert')
     insertUserBankAccount = stub(userBankAccountRepo, 'insert')
+    userBankAccountNotification = stub(userBankAccountNotifier, 'created')
   })
 
   afterEach(() => restore())
@@ -77,5 +80,15 @@ describe('Create bank account', () => {
     expect(userBankAccount.bankCode).to.be.equal('123')
     expect(userBankAccount.accountBranch).to.be.equal('0001')
     expect(userBankAccount.accountNumber).to.be.equal('1234567')
+  });
+
+  it('send a notification when a user bank account is created', async () => {
+    const userParams: UserParams = {
+      fullname: 'Some fullname'
+    }
+
+    await createBankAccount(userParams)
+
+    expect(userBankAccountNotification).to.have.been.calledOnce
   });
 });
