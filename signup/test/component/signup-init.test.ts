@@ -1,6 +1,10 @@
 import { expect } from 'chai'
 import { SignupInitParams }  from '@src/types/signup'
 import signupInit from '@src/controllers/signup-init'
+import { SinonStub, stub, restore } from 'sinon';
+import signupRepo from '@src/ports/repos/signup'
+
+let insertSignup: SinonStub
 
 const makeSignupParams = (): SignupInitParams => ({
   fullname: 'Somebody',
@@ -9,6 +13,12 @@ const makeSignupParams = (): SignupInitParams => ({
 })
 
 describe('SignUp Initialization', () => {
+  beforeEach(() => {
+    insertSignup = stub(signupRepo, "insert").resolves()
+  })
+
+  afterEach(() => restore())
+
   it('should return a signup token as response to signup initialization', async () => {
     const signupParams: SignupInitParams = makeSignupParams()
     const signup = await signupInit(signupParams)
@@ -21,5 +31,13 @@ describe('SignUp Initialization', () => {
     const signup = await signupInit(signupParams)
 
     expect(signup.initParams).to.be.deep.equal(signupParams)
+  });
+
+  it('should persist signup in the database', async () => {
+    const signupParams: SignupInitParams = makeSignupParams()
+    const signup = await signupInit(signupParams)
+
+    expect(insertSignup).to.have.been.calledOnce
+    expect(insertSignup).to.have.been.calledOnceWith(signup)
   });
 });
