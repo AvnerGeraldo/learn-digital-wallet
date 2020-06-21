@@ -1,8 +1,8 @@
 import { expect } from 'chai'
 import { SinonStub, restore, stub } from 'sinon';
 import bankPartner from '@src/ports/bank-partner'
-import userRepo from '@src/ports/repo/user.ts'
-import userBankAccountRepo from '@src/ports/repo/user-bank-account.ts'
+import userRepo from '@src/ports/repos/user'
+import userBankAccountRepo from '@src/ports/repos/user-bank-account'
 import createBankAccount from '@src/controllers/create-bank-account'
 import User, { UserParams, UserBankAccount } from '@src/types/user';
 import BankAccount from '@src/types/bank-account';

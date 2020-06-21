@@ -1,7 +1,7 @@
 import User, { UserParams, UserBankAccount } from "@src/types/user";
 import bankPartner from '@src/ports/bank-partner'
-import userRepo from '@src/ports/repo/user'
-import userBankAccountRepo from '@src/ports/repo/user-bank-account'
+import userRepo from '@src/ports/repos/user'
+import userBankAccountRepo from '@src/ports/repos/user-bank-account'
 import userBankAccountNotifier from '@src/ports/notifiers/user-bank-account'
 import { uuid } from 'uuidv4'
 
