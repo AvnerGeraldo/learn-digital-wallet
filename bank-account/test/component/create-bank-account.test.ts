@@ -65,4 +65,17 @@ describe('Create bank account', () => {
     expect(insertedUserBankAccount.accountBranch).to.be.equal('0001')
     expect(insertedUserBankAccount.accountNumber).to.be.equal('1234567')
   });
+
+  it('should return an user bank account', async () => {
+    const userParams: UserParams = {
+      fullname: 'Some fullname'
+    }
+
+    const userBankAccount = await createBankAccount(userParams)
+
+    expect(userBankAccount.id).to.be.a('string').that.has.length(36)
+    expect(userBankAccount.bankCode).to.be.equal('123')
+    expect(userBankAccount.accountBranch).to.be.equal('0001')
+    expect(userBankAccount.accountNumber).to.be.equal('1234567')
+  });
 });
