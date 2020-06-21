@@ -5,7 +5,8 @@ import signupRepo from '@src/ports/repos/signup'
 export default async (signupInitParams: SignupInitParams): Promise<Signup> => {
     const signup: Signup = {
       token: uuid(),
-      initParams: signupInitParams
+      initParams: signupInitParams,
+      status: 'IN_PROGRESS'
     }
 
     await signupRepo.insert(signup)
